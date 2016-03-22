@@ -4,7 +4,6 @@ var AutoCompleter = require('./AutoCompleter.js');
 
 var App = React.createClass({
 
-
   render: function() {
     return (
       <div className='container'>
