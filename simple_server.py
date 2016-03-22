@@ -6,13 +6,21 @@ from urlparse import urlparse, parse_qs
 
 import requests
 
+# super simple caching
+cache = {}
+
 class B8taAPI(object):
 
     @classmethod
     def get_word(cls, query):
         b8ta_url = 'https://dev.b8ta.com/words/complete?query={}'.format(query)
+        cached_val = cache.get(query)
+        if cached_val:
+            return cached_val
         r = requests.get(b8ta_url)
-        return r
+
+        cache[query] = r.text
+        return r.text
 
 
 class MyHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -47,7 +55,7 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type','application/json')
         self.end_headers()
-        self.wfile.write(b8ta_response.text)
+        self.wfile.write(b8ta_response)
         return
 
     def do_GET(self):
