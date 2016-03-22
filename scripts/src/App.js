@@ -8,7 +8,7 @@ var App = React.createClass({
   render: function() {
     return (
       <div className='container'>
-        <h1>
+        <h1 className='header'>
           Welcome to AutoCompleter
           <br />
           <small className='hidden-xs'>
